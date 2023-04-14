@@ -1,0 +1,69 @@
+# nftmarketplaceport
+sudo apt-get update
+    3  curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+    4  sudo bash nodesource_setup.sh
+    5  sudo apt install nodejs build-essential
+    6  npm install webpack-cli@3.0.8 --legacy-peer-deps
+    7  npm install ganache-cli
+    8  npm install node-gyp@3.6.2
+    9  npm install truffle@5.1.39
+   10  npm install web3@1.8.0  solc@0.4.25
+   11  npm install create-react-app
+   12  gh repo clone davidalfredostrowski/CIS419_ReactRouterDemo
+   13  sudo apt install gh
+   14  gh repo clone davidalfredostrowski/CIS419_ReactRouterDemo
+   15  gh repo clone http://www.github.com/davidalfredostrowski/CIS419_ReactRouterDemo
+   16  git clone https://github.com/davidalfredostrowski/CIS419_ReactRouterDemo.git
+   17  ls
+   18  cd CIS419_ReactRouterDemo/
+   19  ls
+   20  cd src
+   21  ls
+   22  cd ..
+   23  npm start
+   24  vi webpack.client.config.js
+   25  npm start
+   26  cd src
+   27  npm start
+   28  cd ..
+   29  ls
+   30  cat package.json
+   31  cd ..
+   32  ./node_modules/.bin/create-react-app  hello
+   33  ./node_modules/.bin/create-react-app  hellols
+   34  ls
+   35  cd hello
+   36  ls
+   37  cd src
+   38  ls
+   39  cd ..
+   40  npm start
+   41  ls
+   42  cd src
+   43  ls
+   44  cp App.js   App.js_back
+   45  vi App.js
+   46  vi Home.js
+   47  vi About.js
+   48  ls
+   49  cd ..
+   50  npm start
+   51  cd ..
+   52  npm install react-router-dom@6.3.0
+   53  ls
+   54  cd hello
+   55  npm start
+   56  ls
+   57  cd src
+   58  vi App.js
+   59  vi Header.js
+   60  cd ..
+   61  npm start
+   62  history
+
+
+
+
+
+
+
