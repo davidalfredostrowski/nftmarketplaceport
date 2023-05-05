@@ -1,0 +1,154 @@
+import React, { Component } from 'react';
+import { BrowserRouter ,Routes, Route, Link } from 'react-router-dom';
+import Header from  './Header';
+import Home from    './Home';
+import About from   './About';
+import Create from './Create.js'
+import MyListedItems from './MyListedItems.js'
+import MyPurchases from './MyPurchases.js'
+import Navigation from './Navigation.js'
+import Web3 from 'web3'
+import NFTAbi from './NFT.json'
+import { useState } from 'react'
+//import { ethers } from "ethers"
+import { Spinner } from 'react-bootstrap'
+import { create } from "ipfs-http-client";
+import './App.css';
+import { Buffer } from 'buffer';
+import { useEffect } from 'react'
+//import { ethers } from "ethers"
+import { Row, Col, Card } from 'react-bootstrap'
+const cors = require('cors')
+
+const projectId = '';   //(Step 3. Place the project id from your infura project)
+const projectSecret = '';  //(Step 4. Place the project_secrect from your infura project)
+
+const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+
+
+const client  = create({
+   host: "ipfs.infura.io",
+   port: 5001,
+   protocol: "https",
+   apiPath: "/api/v0",
+   headers: {
+     authorization: auth,
+   },
+  });
+
+//import BigNumber from 'bignumber';
+
+//import './App.css';
+class App extends Component {
+
+    state = { votes: '' }
+    componentWillMount(){
+        this.loadBlockchainData()
+    }
+
+    async loadBlockchainData(){
+
+        const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-44-234-147-243.us-west-2.compute.amazonaws.com:8545"))
+
+        this.setState( { web3 } )
+        var account;
+        const accounts  = await web3.eth.getAccounts()
+        console.log(accounts)
+
+        web3.eth.getAccounts().then((f) => {
+           account = f[0];
+        })
+
+        var account2;
+
+
+
+         web3.eth.getAccounts().then((f) => {
+            account2 = f[1];
+        })
+
+
+
+
+        console.log("account")
+        const networkId = await web3.eth.net.getId();
+        console.log("networkId");
+        console.log(networkId);
+        //this.setState( { account : account })
+        this.setState( { account : accounts[0] })
+        this.setState( { account2 : accounts[1] })
+      let jsonData = require('./NFT.json');
+        var networkKey =  Object.keys(jsonData['networks'])[Object.keys(jsonData.networks).length-1]
+     console.log(networkKey)
+        console.log(jsonData['networks'][networkKey]["address"] )
+        console.log("1 get ID based solution")
+        console.log(networkId)
+        // error ? copy over the updated Voting.json from bulid/contract
+        console.log(jsonData['networks'][networkId]["address"] )
+        //const contract = new web3.eth.Contract(VOTING_ABI);
+        const contract = new web3.eth.Contract(jsonData.abi);
+        contract.options.address = jsonData['networks'][networkId]["address"]
+        this.setState( { contract })
+
+        let Marketplace = require('./Marketplace.json');
+        var networkKey =  Object.keys(Marketplace['networks'])[Object.keys(Marketplace.networks).length-1]
+        console.log(Marketplace['networks'][networkId]["address"] )
+        const Marketplacecontract = new web3.eth.Contract(Marketplace.abi);
+        Marketplacecontract.options.address = Marketplace['networks'][networkId]["address"]
+        this.setState( { Marketplacecontract })
+        }
+
+    constructor(props){
+        super(props)
+
+       this.state = {
+            account: '',
+            account2: '',
+            loading: true,
+            fileUrl: '',
+            url: '',
+            items: [],
+            listedItems: [],
+            soldItems:  []
+
+
+        }
+
+          console.log("constructor")
+
+
+    }
+
+
+//function App() {
+render() {
+
+
+        return (
+
+          <BrowserRouter>
+           <div className="App">
+                <>
+                    <Navigation />
+                </>
+           </div>
+            <Routes>
+                <Route  path='/' element={< Home marketplace={this.state.Marketplacecontract} nft={this.state.contract} account={this.state.account}/>}></Route>
+                <Route exact path='/create' element={< Create marketplace={this.state.Marketplacecontract} nft={this.state.contract} account={this.state.account}/>}></Route>
+
+                <Route exact path='/my-listed-items' element={< MyListedItems />}></Route>
+
+
+            </Routes>
+
+       </BrowserRouter>
+   );
+}
+}
+export default App;
+                                         
+
+
+
+
+
